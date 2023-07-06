@@ -19,12 +19,14 @@ const insert = (author) =>{
 
 const update = (author ,id) =>{
     return db('authors').where({author_id : id}).update(author).then(ids =>{
-        return getById(ids[0])
+        return getById(id)
     })
 }
 
-const remove = (id) =>{
-    return db().where({author_id:id}).del();
+const remove =  async (id) =>{
+ const author = await   db('authors').where({author_id:id})
+    await db('authors').where({author_id:id}).del();
+    return author;
 }
 
 module.exports = {
