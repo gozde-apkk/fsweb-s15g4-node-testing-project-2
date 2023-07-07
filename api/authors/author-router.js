@@ -24,7 +24,7 @@ router.get('/:id' , async(req,res) =>{
 router.post('/' , async(req,res) =>{
     try{
         const {name} = req.body;
-        const authors = await authorModel.insert({name: req.bo});
+        const authors = await authorModel.insert({name: req.body});
         res.status(201). json(authors);
     }catch(err){
         res.status(500).json({message:err.message})
@@ -34,6 +34,12 @@ router.post('/' , async(req,res) =>{
 router.put('/:id' , async(req,res) =>{
     try{
         const {name} = req.body;
+        const foundedUser = await authorModel.getByName(name);
+        if(foundedUser){
+            res.status(422).json({message:'Yazar zaten var'})
+        }else{
+
+        }
         const authors = await authorModel.update({name: name} , req.params.id);
         res.status(201). json(authors);
     }catch(err){

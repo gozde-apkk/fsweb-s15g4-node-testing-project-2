@@ -16,6 +16,9 @@ const insert = (author) =>{
     })
 }
 
+const getByName = (name) =>{
+    
+}
 
 const update = (author ,id) =>{
     return db('authors').where({author_id : id}).update(author).then(ids =>{

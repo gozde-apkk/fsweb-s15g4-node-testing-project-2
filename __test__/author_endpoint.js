@@ -51,9 +51,25 @@ describe('AUTHORS', () => {
     test('[6] update author', async()=> {
         const author = {name:'deneme'}
        const res = await request(server).post('/api/authors').send(author);
-       const newAuthor = { name:'deneme3'}
-       const updateRes = await request(server).put('/api/authors/${res.body.author_id}').send(newAuthor)
-        expect(updateRes).toHaveProperty('name' , 'deneme');
+       expect(res.body).toHaveProperty('message', 'Yazar zaten var')
+      // const newAuthor = { name:'deneme3'}
+       //7const updateRes = await request(server).put('/api/authors/${res.body.author_id}').send(newAuthor)
+        //expect(updateRes).toHaveProperty('name' , 'deneme');
     })
+    test('[7] update author', async()=> {
+        const author = {name:'deneme'}
+       const res = await request(server).post('/api/authors').send(author);
+       const newAuthor = { name:'deneme4'}
+       const updateRes = await request(server).put('/api/authors/${res.body.author_id}').send(newAuthor)
+        expect(updateRes.body).toHaveProperty('name' , 'deneme4');
+    })
+    test('[8] delete author', async()=> {
+       
+       const res = await request(server).delete('/api/authors/5');
+       expect(res.body).toHaveProperty('author_id', 5)
+       const usersRes = await request(server).get('/api/authors');
+        expect(updateRes.body).toHaveLength(4)
+    })
+    
     
 });
